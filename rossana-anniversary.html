@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Year, Rossana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush: #fdf1f2;
+    --petal: #f6cfd7;
+    --rose: #d97fa0;
+    --deep-rose: #a6486b;
+    --plum: #4a2536;
+    --gold: #d9a35c;
+    --cream: #fffaf7;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--blush);
+    color: var(--plum);
+    font-family: 'Karla', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection{ background: var(--petal); color: var(--plum); }
+
+  .field{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(217,127,160,0.10), transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(217,163,92,0.08), transparent 45%);
+  }
+
+  section{
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6vh 8vw;
+  }
+
+  .hero-eyebrow{
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--deep-rose);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: rise 1s ease forwards 0.2s;
+  }
+
+  .hero h1{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    margin: 0 0 1.2rem;
+    color: var(--plum);
+    line-height: 1.05;
+    opacity: 0;
+    animation: rise 1.1s ease forwards 0.45s;
+  }
+
+  .hero h1 em{
+    font-style: italic;
+    color: var(--deep-rose);
+  }
+
+  .hero p.sub{
+    font-size: 1.05rem;
+    max-width: 34ch;
+    color: #7a4a5c;
+    opacity: 0;
+    animation: rise 1s ease forwards 0.75s;
+  }
+
+  .scroll-cue{
+    margin-top: 4rem;
+    width: 1px;
+    height: 46px;
+    background: linear-gradient(var(--deep-rose), transparent);
+    opacity: 0;
+    animation: rise 1s ease forwards 1.1s, drift 2.4s ease-in-out infinite 2s;
+  }
+
+  @keyframes rise{
+    from{ opacity: 0; transform: translateY(16px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  @keyframes drift{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(8px); }
+  }
+
+  /* ---------- Letter ---------- */
+  .letter-wrap{
+    display: flex;
+    justify-content: center;
+    padding: 8vh 6vw 10vh;
+  }
+
+  .letter{
+    max-width: 620px;
+    width: 100%;
+    background: var(--cream);
+    border-radius: 2px;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 6vw, 4.5rem);
+    box-shadow: 0 30px 60px -30px rgba(74,37,54,0.25);
+    position: relative;
+  }
+
+  .letter::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--petal), var(--gold));
+  }
+
+  .letter-date{
+    font-size: 0.85rem;
+    color: var(--deep-rose);
+    letter-spacing: 0.03em;
+    margin-bottom: 2rem;
+  }
+
+  .letter p{
+    font-size: 1.08rem;
+    max-width: 56ch;
+    margin: 0 0 1.4rem;
+    color: #3f2230;
+  }
+
+  .letter p.first-line::first-letter{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.4rem;
+    float: left;
+    line-height: 0.8;
+    padding: 0.1rem 0.4rem 0 0;
+    color: var(--deep-rose);
+  }
+
+  .signoff{
+    margin-top: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--deep-rose);
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- Reasons cycler ---------- */
+  .reasons{
+    padding: 4vh 8vw 10vh;
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .reasons h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 0.8rem;
+    color: var(--plum);
+  }
+
+  .reasons p.lede{
+    color: #7a4a5c;
+    margin-bottom: 2.8rem;
+    font-size: 0.98rem;
+  }
+
+  .reason-card{
+    background: var(--cream);
+    border: 1px solid var(--petal);
+    border-radius: 4px;
+    padding: 2.8rem 2rem;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.6rem;
+  }
+
+  .reason-card p{
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    color: var(--deep-rose);
+    max-width: 30ch;
+    margin: 0;
+    opacity: 1;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .reason-card p.swap{
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .reason-controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .reason-btn{
+    border: 1px solid var(--deep-rose);
+    background: transparent;
+    color: var(--deep-rose);
+    font-family: 'Karla', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  }
+  .reason-btn:hover{
+    background: var(--deep-rose);
+    color: var(--cream);
+    transform: translateY(-2px);
+  }
+  .reason-btn:focus-visible{
+    outline: 2px solid var(--deep-rose);
+    outline-offset: 3px;
+  }
+
+  .reason-count{
+    font-size: 0.85rem;
+    color: #b98499;
+  }
+
+  /* ---------- Flip cards ---------- */
+  .things{
+    padding: 4vh 8vw 10vh;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .things h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 0.8rem;
+    color: var(--plum);
+  }
+
+  .things p.lede{
+    color: #7a4a5c;
+    margin-bottom: 2.8rem;
+    font-size: 0.98rem;
+  }
+
+  .things-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .flip-card{
+    perspective: 1000px;
+    height: 170px;
+    cursor: pointer;
+  }
+
+  .flip-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.is-flipped .flip-inner{
+    transform: rotateY(180deg);
+  }
+
+  .flip-face{
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 3px;
+    border: 1px solid var(--petal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.4rem;
+    text-align: center;
+  }
+
+  .flip-front{
+    background: var(--cream);
+  }
+
+  .flip-front span{
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--deep-rose);
+  }
+
+  .flip-back{
+    background: var(--deep-rose);
+    color: var(--cream);
+    transform: rotateY(180deg);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- Closing ---------- */
+  .closing{
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8vh 8vw;
+  }
+
+  .closing h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    margin: 0 0 1rem;
+    max-width: 16ch;
+  }
+
+  .closing p{
+    color: #7a4a5c;
+    max-width: 40ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .bloom-btn{
+    border: 1px solid var(--deep-rose);
+    background: transparent;
+    color: var(--deep-rose);
+    font-family: 'Karla', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.9rem 2.2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.35s ease, color 0.35s ease, transform 0.2s ease;
+  }
+  .bloom-btn:hover{
+    background: var(--deep-rose);
+    color: var(--cream);
+    transform: translateY(-2px);
+  }
+  .bloom-btn:focus-visible{
+    outline: 2px solid var(--deep-rose);
+    outline-offset: 3px;
+  }
+
+  .bloom-note{
+    margin-top: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--deep-rose);
+    max-width: 30ch;
+    min-height: 1.6em;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .bloom-note.shown{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mouse-wrap{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.6rem;
+  }
+
+  .mouse-wrap svg{
+    width: 92px;
+    height: auto;
+  }
+
+  footer{
+    text-align: center;
+    padding: 3rem 1rem 4rem;
+    font-size: 0.8rem;
+    color: #b98499;
+    letter-spacing: 0.02em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+    .hero-eyebrow, .hero h1, .hero p.sub, .scroll-cue{ opacity: 1 !important; transform: none !important; }
+    .reveal{ opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="field"></div>
+
+<section class="hero">
+  <p class="hero-eyebrow">September 4th <span aria-hidden="true">🍁</span></p>
+  <h1>One year of<br><em>choosing you</em></h1>
+  <p class="sub">A little letter for Rossana, from me.</p>
+  <div class="scroll-cue"></div>
+</section>
+
+<section class="letter-wrap">
+  <div class="letter reveal">
+    <p class="letter-date">Today</p>
+    <p class="first-line">Dear Rossana,</p>
+    <p>A year ago today, I didn't know how much room you were about to take up in my life, in the best way possible. I remember being a little nervous, a little unsure of how things would go, and mostly just hoping I wouldn't say something dumb. Look at us now, three hundred and sixty five days in.</p>
+    <p>It's strange how a year can feel both like no time at all and like you've always been around. I can barely picture what my routine looked like before you were part of it. Somewhere along the way you turned into the person I want to tell things to first, the good news and the bad, the boring middle-of-the-day stuff too.</p>
+    <p>You have this way of making ordinary days feel worth remembering. A random Tuesday text, the way you laugh at your own jokes before you finish telling them, the way you check on me without making it a big deal. None of it has gone unnoticed. I've been paying attention the whole time, even when I didn't say so.</p>
+    <p>I think what gets me most is how steady you are. Not boring, never that, but dependable in a way that makes everything else feel a little less shaky. I know where I stand with you, and that has quietly made me braver in other parts of my life too.</p>
+    <p>I'm grateful for the version of me that gets to know you. Softer, steadier, more willing to say what I actually mean instead of dancing around it. You had a hand in that, even on days you probably didn't realize it.</p>
+    <p>I don't know exactly what the next year looks like, and honestly that's part of what makes it exciting. New routines, new inside jokes, probably a few more arguments about what to watch. Whatever it is, I want to be figuring it out next to you.</p>
+    <p>So here's to the year behind us, messy and good in equal measure, and to however many more we get to build.</p>
+    <p class="signoff">Yours, always finding new reasons,</p>
+  </div>
+</section>
+
+<section class="reasons">
+  <h2>A running list</h2>
+  <p class="lede">Reasons I like you, one at a time. Keep clicking, there are more.</p>
+  <div class="reason-card">
+    <p id="reasonText">You make hard days feel manageable just by being around.</p>
+  </div>
+  <div class="reason-controls">
+    <button class="reason-btn" id="reasonBtn">show me another</button>
+    <span class="reason-count" id="reasonCount">1 of 12</span>
+  </div>
+</section>
+
+<section class="things">
+  <h2>Little things</h2>
+  <p class="lede">Tap a card to flip it.</p>
+  <div class="things-grid reveal">
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip card about your laugh">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><span>Your laugh</span></div>
+        <div class="flip-face flip-back">It gives away exactly how you're feeling before you say a word.</div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip card about your patience">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><span>Your patience</span></div>
+        <div class="flip-face flip-back">With me on my worst days, it hasn't gone unnoticed.</div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip card about your hands">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><span>Your hands</span></div>
+        <div class="flip-face flip-back">Somehow they always find mine at the right moment.</div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip card about your mind">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><span>Your mind</span></div>
+        <div class="flip-face flip-back">It makes every conversation the best part of my day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="mouse-wrap reveal" aria-hidden="true">
+    <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="80" cy="110" rx="34" ry="28" fill="#f6cfd7"/>
+      <circle cx="52" cy="60" r="16" fill="#f6cfd7"/>
+      <circle cx="108" cy="60" r="16" fill="#f6cfd7"/>
+      <circle cx="52" cy="60" r="8" fill="#fdf1f2"/>
+      <circle cx="108" cy="60" r="8" fill="#fdf1f2"/>
+      <circle cx="80" cy="82" r="30" fill="#fdf1f2" stroke="#d97fa0" stroke-width="1.5"/>
+      <circle cx="70" cy="80" r="3.5" fill="#4a2536"/>
+      <circle cx="90" cy="80" r="3.5" fill="#4a2536"/>
+      <ellipse cx="80" cy="90" rx="5" ry="3.5" fill="#a6486b"/>
+      <path d="M55 92 Q40 88 30 92" stroke="#a6486b" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M55 96 Q40 96 30 100" stroke="#a6486b" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M105 92 Q120 88 130 92" stroke="#a6486b" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M105 96 Q120 96 130 100" stroke="#a6486b" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M56 60 Q80 34 104 60 Q104 46 80 42 Q56 46 56 60 Z" fill="#fffaf7" stroke="#d97fa0" stroke-width="1.5"/>
+      <rect x="60" y="56" width="40" height="7" rx="3.5" fill="#fffaf7" stroke="#d97fa0" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <h2 class="reveal">Happy one year, Rossana.</h2>
+  <p class="reveal">Here's to all the ordinary days still ahead of us.</p>
+  <button class="bloom-btn" id="bloomBtn">tap here</button>
+  <p class="bloom-note" id="bloomNote">you're my favorite person, easily.</p>
+</section>
+
+<footer>made with a lot of thought, just for you</footer>
+
+<script>
+  // Scroll-reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Bloom button
+  const bloomBtn = document.getElementById('bloomBtn');
+  const bloomNote = document.getElementById('bloomNote');
+  bloomBtn.addEventListener('click', () => {
+    bloomNote.classList.add('shown');
+  });
+
+  // Reasons cycler
+  const reasons = [
+    "You make hard days feel manageable just by being around.",
+    "You remember small details about my life without me repeating them.",
+    "You're funnier than you give yourself credit for.",
+    "You ask good questions and actually listen to the answers.",
+    "You're steady in a way that makes everything else feel less shaky.",
+    "You make room for my bad moods without taking them personally.",
+    "You're curious about the world in a way that rubs off on me.",
+    "You give the best hugs, no notes.",
+    "You're honest, even when the easier thing would be to say nothing.",
+    "You make ordinary plans feel like something to look forward to.",
+    "You're a good sport, even when I drag you into something ridiculous.",
+    "You've made me a calmer, more patient version of myself.",
+    "You say what you mean instead of making me guess.",
+    "You root for me even when you're having a rough day yourself.",
+    "You're weirdly good at cheering people up without trying too hard.",
+    "You notice when something's off before I even say anything.",
+    "You're not afraid to be a little ridiculous in public.",
+    "You keep your word, even about the small stuff.",
+    "You make me want to be a better listener.",
+    "You have opinions about things and I respect that.",
+    "You're generous with your time in a way that isn't performative.",
+    "You know how to apologize properly, which is rarer than it should be.",
+    "You take care of the people around you without expecting credit.",
+    "You still get excited about small good things.",
+    "You're a great person to be bored with, somehow.",
+    "You give surprisingly solid advice when I actually ask for it.",
+    "You're stubborn in exactly the right amounts.",
+    "You make me laugh at moments I don't expect to.",
+    "You're thoughtful about gifts in a way that shows you were paying attention.",
+    "You're comfortable saying you don't know something.",
+    "You have a good sense of when to push me and when to back off.",
+    "You're kind to people who can't do anything for you.",
+    "You take pride in things you're good at without being obnoxious about it.",
+    "You're easy to be around on a bad day.",
+    "You have a great memory for the things that matter to me.",
+    "You're willing to compromise without keeping score.",
+    "You get genuinely excited talking about the things you're into.",
+    "You're a calming presence when things get chaotic.",
+    "You don't need the last word, most of the time.",
+    "You're good at reading a room.",
+    "You take feedback well, even when it's annoying to hear.",
+    "You're consistent, which I don't think gets said enough.",
+    "You make effort look easy.",
+    "You make plans feel exciting, even the ones that never happen.",
+    "You know how to sit with someone in silence and make it comfortable.",
+    "You're quick to give people the benefit of the doubt.",
+    "You have surprisingly strong opinions about food.",
+    "You make an effort with the people I care about.",
+    "You're someone I'd choose again, easily.",
+    "You've made this year one I'll actually remember."
+  ];
+
+  let reasonIndex = 0;
+  const reasonText = document.getElementById('reasonText');
+  const reasonCount = document.getElementById('reasonCount');
+  const reasonBtn = document.getElementById('reasonBtn');
+
+  reasonBtn.addEventListener('click', () => {
+    reasonIndex = (reasonIndex + 1) % reasons.length;
+    reasonText.classList.add('swap');
+    setTimeout(() => {
+      reasonText.textContent = reasons[reasonIndex];
+      reasonCount.textContent = (reasonIndex + 1) + ' of ' + reasons.length;
+      reasonText.classList.remove('swap');
+    }, 350);
+  });
+
+  // Flip cards
+  document.querySelectorAll('.flip-card').forEach(card => {
+    const toggle = () => card.classList.toggle('is-flipped');
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
